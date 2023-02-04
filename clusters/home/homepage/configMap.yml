@@ -17,7 +17,7 @@ data:
             key: SECRET_TRUENAS_APIKEY
 
       - PFSense:
-          iconf: pfsense.png
+          icon: pfsense.png
           href: http://10.0.0.1/
           description: PFSense Router
           ping: http://10.0.0.1/
@@ -32,13 +32,13 @@ data:
             key: SECRET_PIHOLE_APIKEY
           
       - XEN Orchestra:
-          icon: https://github.com/linuxserver/Heimdall-Apps/blob/master/XenOrchestra/xenorchestra.png
+          icon: https://github.com/linuxserver/Heimdall-Apps/raw/master/XenOrchestra/xenorchestra.png
           href: https://xen.donjuma.com/
           description: XCP-NG Hypervisor (xoa)
           ping: https://xen.donjuma.com
 
       - TP-Link:
-          iconf: tplink.png
+          icon: tplink.png
           href: http://10.0.0.10/
           description: TP-Link Switch (TL-SG108PE)
           ping: http://10.0.0.10/
