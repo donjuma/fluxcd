@@ -17,12 +17,14 @@ spec:
       containers:
         - name: homepage
           image: ghcr.io/benphelps/homepage:latest
-          command:
-            - sh
-            - -ce
-            - cp /tmp/config/* /app/config &&
-            - sed -i "s/SECRET_PIHOLE_APIKEY/$PIHOLE_APIKEY/g" "/app/config/services.yaml" &&
-            - node server.js
+          command: ["/bin/sh","-c"]
+          args: 
+            - cp /tmp/config/* /app/config;
+              sed -i "s/SECRET_PLEX_APIKEY/$PLEX_APIKEY/g" /app/config/services.yaml;
+              sed -i "s/SECRET_PIHOLE_APIKEY/$PIHOLE_APIKEY/g" /app/config/services.yaml;
+              sed -i "s/SECRET_SABNZBD_APIKEY/$SABNZBD_APIKEY/g" /app/config/services.yaml;
+              sed -i "s/SECRET_TRUENAS_APIKEY/$TRUENAS_APIKEY/g" /app/config/services.yaml;
+              node server.js
           ports:
             - containerPort: 3000
           env:
@@ -31,6 +33,21 @@ spec:
                secretKeyRef:
                  name: homepage-secrets
                  key: pihole-api
+           - name: PLEX_APIKEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: plex-api
+           - name: SABNZBD_APIKEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: sabnzbd-api
+           - name: TRUENAS_APIKEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: truenas-api
           volumeMounts:
             - name: config-vol
               mountPath: /tmp/config

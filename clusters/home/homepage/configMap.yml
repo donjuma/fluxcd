@@ -5,7 +5,23 @@ metadata:
   name: homepage-config
 data:
   services.yaml: |
-    - Group A:
+    - Infrastructure:
+      - TrueNAS:
+          icon: truenas-scale.png
+          href: https://nas.donjuma.com/
+          description: TrueNAS Scale
+          ping: https://nas.donjuma.com
+          widget:
+            type: truenas
+            url: https://nas.donjuma.com
+            key: SECRET_TRUENAS_APIKEY
+
+      - PFSense:
+          iconf: pfsense.png
+          href: http://10.0.0.1/
+          description: PFSense Router
+          ping: http://10.0.0.1/
+
       - Pi-Hole:
           icon: pihole.png
           href: http://10.0.2.5:9089/admin
@@ -14,13 +30,50 @@ data:
             type: pihole
             url: http://10.0.2.5:9089
             key: SECRET_PIHOLE_APIKEY
+          
+      - XEN Orchestra:
+          icon: https://github.com/linuxserver/Heimdall-Apps/blob/master/XenOrchestra/xenorchestra.png
+          href: https://xen.donjuma.com/
+          description: XCP-NG Hypervisor (xoa)
+          ping: https://xen.donjuma.com
 
-    - Group B:
-        - Radarr:
-            icon: radarr.png
-            href: http://radarr.host/
-            description: Movie management
+      - TP-Link:
+          iconf: tplink.png
+          href: http://10.0.0.10/
+          description: TP-Link Switch (TL-SG108PE)
+          ping: http://10.0.0.10/
+
+
+    - Media:
+        - Plex:
+            icon: plex.png
+            href: https://plex.donjuma.com/
+            description: Plex Media Server
             widget:
-              type: radarr
-              url: http://radarr.host
-              key: apikeyapikeyapikeyapikeyapikey
+              type: plex
+              url: https://plex.donjuma.com
+              key: SECRET_PLEX_APIKEY
+      
+    - Smort Home:
+        - Home Assistant:
+            icon: home-assistant-circle.png
+            href: https://homeassistant.donjuma.com/
+            description: Smart Home Management
+  
+
+    - Tools:
+        - BitWarden:
+            icon: bitwarden.png
+            href: https://bw.donjuma.com/
+            description: BitWarden Password Manager
+            ping: https://bw.donjuma.com
+
+        - SABnzbd:
+            icon: sabnzbd-text.png
+            href: http://ymir.whatbox.ca:12486/
+            description: Plex Media Server
+            ping: http://ymir.whatbox.ca:12486
+            widget:
+              type: sabnzbd
+              url: http://ymir.whatbox.ca:12486
+              key: SECRET_SABNZBD_APIKEY
