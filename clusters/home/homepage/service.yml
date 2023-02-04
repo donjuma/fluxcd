@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homepage
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app: homepage
+  ports:
+    - port: 3000
+      name: homepage
+      targetPort: 3000
+  type: LoadBalancer

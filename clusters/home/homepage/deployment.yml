@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+spec:
+  selector:
+    matchLabels:
+      app: homepage
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: homepage
+    spec:
+      containers:
+        - name: homepage
+          image: ghcr.io/benphelps/homepage:latest
+          command: [
+            "sh",
+            "-ce",
+            "cp /tmp/config/* /app/config && node server.js"
+          ]
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: config-vol
+              mountPath: /tmp/config
+              readOnly: false
+            - name: tmp-vol
+              mountPath: /app/config
+      volumes:
+        - name: config-vol
+          configMap:
+            name: homepage-config
+        - name: tmp-vol
+          emptyDir: {}
