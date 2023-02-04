@@ -13,7 +13,7 @@ data:
           widget:
             type: pihole
             url: http://10.0.2.5:9089
-            key: apikeyapikeyapikeyapikeyapikey
+            key: SECRET_PIHOLE_APIKEY
 
     - Group B:
         - Radarr:

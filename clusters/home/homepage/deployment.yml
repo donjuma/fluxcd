@@ -17,11 +17,12 @@ spec:
       containers:
         - name: homepage
           image: ghcr.io/benphelps/homepage:latest
-          command: [
-            "sh",
-            "-ce",
-            "cp /tmp/config/* /app/config && node server.js"
-          ]
+          command:
+            - sh
+            - -ce
+            - cp /tmp/config/* /app/config &&
+            - sed -i "s/SECRET_PIHOLE_APIKEY/$PIHOLE_APIKEY/g" "/app/config/services.yaml" &&
+            - node server.js
           ports:
             - containerPort: 3000
           env:
