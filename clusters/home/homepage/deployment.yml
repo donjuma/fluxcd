@@ -24,6 +24,12 @@ spec:
           ]
           ports:
             - containerPort: 3000
+          env:
+           - name: PIHOLE_APIKEY
+             valueFrom:
+               secretKeyRef:
+                 name: homepage-secrets
+                 key: pihole-api
           volumeMounts:
             - name: config-vol
               mountPath: /tmp/config
