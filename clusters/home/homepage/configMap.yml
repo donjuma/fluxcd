@@ -4,7 +4,29 @@ metadata:
   namespace: homepage
   name: homepage-config
 data:
-  kubernetes.yaml: |
+  widgets.yaml: |
+    - greeting:
+        text_size: 3xl
+        text: DonJumaNet 
+      
+    - search:
+        provider: duckduckgo
+        target: _self
+
+    - datetime
+        text_size: x1
+        format:
+          timeStyle: short
+          dateStyle: short
+          hour12: false
+        
+    - openmeteo:
+        latitude: 39.115504
+        longitude: -77.205015
+        timezone: America/New_York
+        units: imperial
+        cache: 5
+
     - kubernetes:
         cluster:
           # Shows the cluster node
@@ -26,6 +48,35 @@ data:
           # Shows the label, which is always the node name
           showLabel: true
 
+  bookmarks.yaml: |
+    - Social:
+      - Reddit:
+        - abbr: RE
+          icon: reddit.png
+          href: https://reddit.com
+      - YouTube:
+        - abbr: YT
+          icon: youtube.png
+          href: https://youtube.com
+      - Twitter:
+        - abbr: TW
+          icon: twitter.png
+          href: https://twitter.com
+      
+    - Productivity:
+      - GitHub:
+        - abbr: GH
+          icon: github.png
+          href: https://github.com
+
+    - Okta:
+      - Okta:
+        - abbr: OK
+          href: https://okta.okta.com
+      - Bacon:
+        - abbr: BN
+          href: https://example.com
+
   services.yaml: |
     - Infrastructure:
       - TrueNAS:
@@ -42,7 +93,7 @@ data:
           icon: pfsense.png
           href: http://10.0.0.1/
           description: PFSense Router
-          ping: http://10.0.0.1/
+          ping: https://router.donjuma.com/
 
       - Pi-Hole:
           icon: pihole.png
@@ -99,3 +150,26 @@ data:
               type: sabnzbd
               url: http://ymir.whatbox.ca:12486
               key: SECRET_SABNZBD_APIKEY
+            
+        - ruTorrent:
+            icon: rutorrent.png
+            href: https://ymir.whatbox.ca/webui/
+            description: Linux ISOs only!
+            ping: https://ymir.whatbox.ca/webui/
+            
+            
+  settings.yaml: |
+    title: DonJumaNet
+    headerStyle: boxed
+    color: slate
+    target: _self
+
+    layout:
+      Infrastructure:
+        icon: shellhub.png
+      Media:
+        icon: synology-video-station.png
+      Smort Home:
+        icon: home-assistant.png
+      Tools:
+        icon: shell.png
