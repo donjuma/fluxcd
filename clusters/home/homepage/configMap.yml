@@ -13,7 +13,7 @@ data:
         provider: duckduckgo
         target: _self
 
-    - datetime
+    - datetime:
         text_size: x1
         format:
           timeStyle: short
@@ -40,7 +40,7 @@ data:
           label: "cluster"
         nodes:
           # Shows the clusters
-          show: true
+          show: false
           # Shows the CPU for each node
           cpu: true
           # Shows the memory for each node
@@ -156,7 +156,7 @@ data:
             href: https://ymir.whatbox.ca/webui/
             description: Linux ISOs only!
             ping: https://ymir.whatbox.ca/webui/
-            
+
             
   settings.yaml: |
     title: DonJumaNet
