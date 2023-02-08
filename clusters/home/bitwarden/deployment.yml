@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bitwarden
+  name: bitwarden
+  namespace: bitwarden
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitwarden
+  template:
+    metadata:
+      labels:
+        app: bitwarden
+    spec:
+      #hostNetwork: true
+      securityContext:
+        fsGroup: 568
+        runAsUser: 568
+      volumes:
+        - name: bitwarden-storage
+          nfs:
+            server: 10.0.0.40
+            path: "/mnt/tank/services/bitwarden"
+      containers:
+        - image: vaultwarden/server:latest
+          name: bitwarden
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 3012
+              name: websocket
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/data"
+              name: bitwarden-storage
+          envFrom:
+            - configMapRef:
+                name: bitwarden-configmap
+          env:
+            - name: SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-secrets
+                  key: smtp-username
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-secrets
+                  key: smtp-password
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-secrets
+                  key: admin-token
