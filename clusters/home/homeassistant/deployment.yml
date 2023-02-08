@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: homeassistant
+  name: homeassistant
+  namespace: homeassistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homeassistant
+  template:
+    metadata:
+      labels:
+        app: homeassistant
+    spec:
+      hostNetwork: true
+      volumes:
+        - name: homeassistant-storage
+          nfs:
+            server: 10.0.0.40
+            path: "/mnt/tank/services/homeassistant"
+ #       - name: ha-mysql-storage
+ #         hostPath:
+ #           path: /opt/ha-mysql
+ #           type: DirectoryOrCreate
+      containers:
+        - image: ghcr.io/home-assistant/home-assistant:stable
+          name: home-assistant
+          ports:
+            - containerPort: 8123
+          volumeMounts:
+            - mountPath: "/config"
+              name: homeassistant-storage
+ #       - image: mysql:latest
+ #         name: mysql
+ #         env:
+ #           - name: MYSQL_ROOT_PASSWORD
+ #             valueFrom:
+ #               secretKeyRef:
+ #                 name: mysql-recorder-pass
+ #                 key: password
+ #         volumeMounts:
+ #           - name: ha-mysql-storage
+ #             mountPath: /var/lib/mysql
