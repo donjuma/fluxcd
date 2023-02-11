@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sonarr
+  name: sonarr
+  namespace: sonarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      #hostNetwork: true
+      securityContext:
+        fsGroup: 568
+        runAsUser: 568
+      volumes:
+        - name: sonarr-storage
+          nfs:
+            server: 10.0.0.40
+            path: "/mnt/tank/services/sonarr"
+      containers:
+        - image: lscr.io/linuxserver/sonarr:latest
+          name: sonarr
+          ports:
+            - containerPort: 8989
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - mountPath: "/config"
+              name: sonarr-storage
+          envFrom:
+            - configMapRef:
+                name: sonarr-configmap

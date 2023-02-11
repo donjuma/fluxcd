@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sonarr-configmap
+  namespace: sonarr
+  labels:
+    app: sonarr
+data:
+  TZ: 'America/New_York'
+  PUID: '568'
+  GUID: '568'

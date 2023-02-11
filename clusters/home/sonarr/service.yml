@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: sonarr
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app: sonarr
+  ports:
+    - port: 8989
+      protocol: TCP
+      name: http
+      targetPort: 8989
+  type: LoadBalancer
