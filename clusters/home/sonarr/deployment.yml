@@ -1,9 +1,7 @@
----
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: sonarr
   name: sonarr
   namespace: sonarr
 spec:
@@ -16,25 +14,33 @@ spec:
       labels:
         app: sonarr
     spec:
-      #hostNetwork: true
-      securityContext:
-        fsGroup: 568
-        runAsUser: 568
-      volumes:
-        - name: sonarr-storage
-          nfs:
-            server: 10.0.0.40
-            path: "/mnt/tank/services/sonarr"
       containers:
-        - image: lscr.io/linuxserver/sonarr:latest
-          name: sonarr
-          ports:
-            - containerPort: 8989
-              name: http
-              protocol: TCP
-          volumeMounts:
-            - mountPath: "/config"
-              name: sonarr-storage
-          envFrom:
-            - configMapRef:
-                name: sonarr-configmap
+      - name: sonarr
+        image: linuxserver/sonarr
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8989
+        envFrom:
+          - configMapRef:
+              name: sonarr-configmap
+        env:
+          - name: PUID
+            value: "568"
+          - name: PGID
+            value: "568"
+        volumeMounts:
+        - name: sonarr
+          mountPath: /config
+        - name: sonarr-downloads
+          mountPath: /download
+        - name: sonarr-lib
+          mountPath: /mnt/media/tv
+      volumes:
+      - name: sonarr
+        hostPath:
+          path: /mnt/sonarr
+      - name: sonarr-downloads
+        hostPath:
+          path: /mnt/sonarr/downloads
+      - name: sonarr-lib
+        emptyDir: {}
