@@ -42,6 +42,13 @@ spec:
             - configMapRef:
                 name: bitwarden-configmap
           env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: bitwarden-secrets
+                  key: database-url
+            - name: ENABLE_DB_WAL
+              value: "false"
             - name: SMTP_USERNAME
               valueFrom:
                 secretKeyRef:
