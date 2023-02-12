@@ -14,6 +14,7 @@ spec:
       labels:
         app: sonarr
     spec:
+      nodeName: k8sn3
       containers:
       - name: sonarr
         image: linuxserver/sonarr
@@ -34,7 +35,7 @@ spec:
         - name: sonarr-downloads
           mountPath: /download
         - name: sonarr-lib
-          mountPath: /mnt/media/tv
+          mountPath: /mnt/media
       volumes:
       - name: sonarr
         hostPath:
@@ -43,4 +44,6 @@ spec:
         hostPath:
           path: /mnt/sonarr/downloads
       - name: sonarr-lib
-        emptyDir: {}
+        nfs:
+          server: 10.0.0.40
+          path: /mnt/tank/media/tv
