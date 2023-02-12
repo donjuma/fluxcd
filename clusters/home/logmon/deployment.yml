@@ -1,0 +1,38 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: logmon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: grafana-config
+          mountPath: /var/lib/grafana
+          subPath: grafana
+      volumes:
+      - name: grafana-config
+        persistentVolumeClaim:
+          claimName: grafana-config
+#        emptyDir: {}
+#        nfs:
+#          server: 10.0.0.40
+#          path: /mnt/tank/services/logging/grafana

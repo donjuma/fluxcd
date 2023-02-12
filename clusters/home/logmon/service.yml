@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logmon
+  namespace: logmon
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app: grafana
+  ports:
+    - port: 3000
+      protocol: TCP
+      name: http
+      targetPort: 3000
+  type: LoadBalancer

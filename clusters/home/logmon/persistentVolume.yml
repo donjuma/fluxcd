@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-nfs-storage
+  namespace: logmon
+  labels:
+    bucket: shared
+spec:
+  capacity:
+    storage: 150Mi
+  volumeMode: Filesystem
+  storageClassName: slow
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteOnce
+  mountOptions:
+    - hard
+  #  - nfsvers=4.1
+  nfs:
+    server: 10.0.0.40
+    path: /mnt/tank/services/logging
