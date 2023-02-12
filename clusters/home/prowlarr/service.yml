@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+  namespace: prowlarr
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app: prowlarr
+  ports:
+    - port: 9696
+      protocol: TCP
+      name: http
+      targetPort: 9696
+  type: LoadBalancer

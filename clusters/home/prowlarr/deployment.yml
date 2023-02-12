@@ -1,0 +1,38 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prowlarr
+  namespace: prowlarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prowlarr
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      nodeName: k8sn3
+      containers:
+      - name: prowlarr
+        image: linuxserver/prowlarr
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9696
+        envFrom:
+          - configMapRef:
+              name: prowlarr-configmap
+        env:
+          - name: PUID
+            value: "568"
+          - name: PGID
+            value: "568"
+        volumeMounts:
+        - name: prowlarr
+          mountPath: /config
+      volumes:
+      - name: prowlarr
+        hostPath:
+          path: /mnt/prowlarr

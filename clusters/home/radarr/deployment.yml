@@ -1,0 +1,49 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: radarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      nodeName: k8sn2
+      containers:
+      - name: radarr
+        image: linuxserver/radarr
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7878
+        envFrom:
+          - configMapRef:
+              name: radarr-configmap
+        env:
+          - name: PUID
+            value: "568"
+          - name: PGID
+            value: "568"
+        volumeMounts:
+        - name: radarr
+          mountPath: /config
+        - name: radarr-downloads
+          mountPath: /download
+        - name: radarr-lib
+          mountPath: /mnt/media
+      volumes:
+      - name: radarr
+        hostPath:
+          path: /mnt/radarr
+      - name: radarr-downloads
+        hostPath:
+          path: /mnt/radarr/downloads
+      - name: radarr-lib
+        nfs:
+          server: 10.0.0.40
+          path: /mnt/tank/media/movies

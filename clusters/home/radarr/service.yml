@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  namespace: radarr
+spec:
+  ipFamilyPolicy: PreferDualStack
+  selector:
+    app: radarr
+  ports:
+    - port: 7878
+      protocol: TCP
+      name: http
+      targetPort: 7878
+  type: LoadBalancer
